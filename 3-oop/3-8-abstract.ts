@@ -9,16 +9,12 @@
         makeCoffee(shots: number): CoffeeCup;
     }
 
-    class CoffeeMachine implements CoffeMaker {
+    abstract class CoffeeMachine implements CoffeMaker {
         private static BEANS_GRAMM_PER_SHOT: number = 7;
         protected coffeeBeans: number;
 
         public constructor(coffeeBeans: number){
             this.coffeeBeans = coffeeBeans;
-        }
-
-        static makeMachine(coffeeBeans: number): CoffeeMachine{
-            return new CoffeeMachine(coffeeBeans);
         }
 
         fillCoffeeBeans(beans: number){
@@ -44,13 +40,7 @@
             console.log('heating....')
         }
 
-        private extract(shots: number): CoffeeCup{
-            console.log(`Pulling ${shots} shots...`);
-            return{
-                shots,
-                hasMilk: false
-            }
-        }
+        protected abstract extract(shots: number): CoffeeCup;
 
         makeCoffee(shots: number): CoffeeCup {
             this.grindBeans(shots);
@@ -66,31 +56,28 @@
         private steamMilk(): void{
             console.log('steaming some milk...');
         }
-        makeCoffee(shots: number): CoffeeCup{
-            const coffee = super.makeCoffee(shots);
+
+        protected extract(shots: number): CoffeeCup{
             this.steamMilk();
             return{
-                ...coffee,
+                shots,
                 hasMilk: true
             }
         }
     }
     
     class SweetCoffeeMaker extends CoffeeMachine{
-        makeCoffee(shots: number): CoffeeCup{
-            const coffee = super.makeCoffee(shots);
+        protected extract(shots: number): CoffeeCup{
             return{
-                ...coffee,
+                shots,
                 hasSugar: true
             }
         }
     }
 
     const machines: CoffeMaker[] = [
-        new CoffeeMachine(16),
         new CaffeLatteMachine(16, '1'),
         new SweetCoffeeMaker(16),
-        new CoffeeMachine(16),
         new CaffeLatteMachine(16, '1'),
         new SweetCoffeeMaker(16),
     ]
