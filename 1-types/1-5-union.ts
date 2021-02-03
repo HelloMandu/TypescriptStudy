@@ -2,6 +2,10 @@
     /**
      * Union types: OR
      */
+    let test: string | number;
+    test = "str";
+    test = 5;
+    
     type Direction = 'left' | 'right' | 'up' | 'down';
     function move(direction: Direction){
         console.log(direction);
