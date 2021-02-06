@@ -17,6 +17,7 @@ export class VideoComponent extends BaseComponent {
     converToEmbeddedURL(url) {
         const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:(?:youtube.com\/(?:(?:watch\?v=)|(?:embed\/))([\w-]{11}))|(?:youtu.be\/([\w-]{11})))/;
         const match = (url.match(regExp));
+        console.log(match);
         const id = match ? match[1] || match[2] : undefined;
         if (id) {
             return `https://www.youtube.com/embed/${id}`;
