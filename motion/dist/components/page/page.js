@@ -4,10 +4,10 @@ export class PageItemComponent extends BaseComponent {
         super(`
             <li class="page-item">
                 <section class="page-item__body">
-                    <div class="page-item__controls">
-                        <button class="close">&times;</button>
-                    </div>
                 </section>
+                <div class="page-item__controls">
+                    <button class="close">&times;</button>
+                </div>
             </li>
         `);
         const closeBtn = this.element.querySelector('.close');

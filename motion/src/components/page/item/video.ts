@@ -7,7 +7,7 @@ export class VideoComponent extends BaseComponent<HTMLElement>{
                 <div class="video__player">
                     <iframe class="video__iframe"></iframe>
                 </div>
-                <h3 class="video__title"></h3>
+                <h3 class="page-item__title video__title"></h3>
             </section>
         `);
         const iframeElement = this.element.querySelector('.video__iframe')! as HTMLIFrameElement;
@@ -22,7 +22,6 @@ export class VideoComponent extends BaseComponent<HTMLElement>{
     private converToEmbeddedURL(url: string): string{
         const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:(?:youtube.com\/(?:(?:watch\?v=)|(?:embed\/))([\w-]{11}))|(?:youtu.be\/([\w-]{11})))/
         const match = (url.match(regExp));
-        console.log(match)
         const id = match ? match[1] || match[2] : undefined;
         if(id){
             return `https://www.youtube.com/embed/${id}`;
