@@ -26,15 +26,22 @@ export class PageItemComponent extends BaseComponent {
     }
     onDragStart(_) {
         this.notifyDragObservers('start');
+        this.element.classList.add('lifted');
     }
     onDragEnd(_) {
         this.notifyDragObservers('stop');
+        this.element.classList.remove('lifted');
     }
     onDragEnter(_) {
         this.notifyDragObservers('enter');
+        this.element.classList.add('drop-area');
     }
     onDragLeave(_) {
         this.notifyDragObservers('leave');
+        this.element.classList.remove('drop-area');
+    }
+    onDropped() {
+        this.element.classList.remove('drop-area');
     }
     notifyDragObservers(state) {
         this.dragStateListener && this.dragStateListener(this, state);
@@ -87,6 +94,7 @@ export class PageComponent extends BaseComponent {
             this.dragTarget.removeFrom(this.element);
             this.dropTarget.attach(this.dragTarget, dropY < srcElement.y ? 'beforebegin' : 'afterend');
         }
+        this.dropTarget.onDropped();
     }
     addChild(section) {
         const item = new this.pageItemConstructor();
@@ -108,11 +116,9 @@ export class PageComponent extends BaseComponent {
                     this.updateSections('unmute');
                     break;
                 case 'enter':
-                    console.log('enter', target);
                     this.dropTarget = target;
                     break;
                 case 'leave':
-                    console.log('leave', target);
                     this.dropTarget = undefined;
                     break;
                 default:
